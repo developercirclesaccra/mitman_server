@@ -1,0 +1,27 @@
+{
+  "name": "mitman_server",
+  "version": "1.0.0",
+  "description": "Node backend service for Mitman",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developercirclesaccra/mitman_server.git"
+  },
+  "author": "John Otu <johnne01@gmail.com> (https://github.com/johnotu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/developercirclesaccra/mitman_server/issues"
+  },
+  "homepage": "https://github.com/developercirclesaccra/mitman_server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
+  }
+}
