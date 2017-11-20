@@ -5,21 +5,13 @@ const router = express.Router();
 
 const User = require('../models/user');
 
-let authenticateCall = (req, res, next) => {
-  if (process.env.MITMAN_TOKEN == req.get('mitman-token')) {
-    return next();
-  }
-  res.status(401).json({
-    success: false,
-    msg: 'Unauthorized request',
-  })
-}
+const authenticateRequest = require('../utils/authenticate-request');
 
-router.get('/', authenticateCall, (req, res) => {
+router.get('/', authenticateRequest, (req, res) => {
   res.status(200).send('User');
 });
 
-router.post('/', authenticateCall, (req, res) => {
+router.post('/', authenticateRequest, (req, res) => {
   let newUser = new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -44,7 +36,7 @@ router.post('/', authenticateCall, (req, res) => {
   });
 });
 
-router.get('/:fbid', authenticateCall, (req, res) => {
+router.get('/:fbid', authenticateRequest, (req, res) => {
   let fbId = req.params.fbid;
   User.getUserByFbId(fbId, (err, user) => {
     if (err) {
