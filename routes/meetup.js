@@ -3,16 +3,16 @@
 const express = require('express');
 const router = express.Router();
 
-const Event = require('../models/event');
+const Meetup = require('../models/meetup');
 
 const authenticateRequest = require('../utils/authenticate-request');
 
 router.get('/', authenticateRequest, (req, res) => {
-  res.status(200).send('Event');
+  res.status(200).send('Meetup');
 });
 
 router.post('/', authenticateRequest, (req, res) => {
-  let newEvent = new Event({
+  let newMeetup = new Meetup({
     name: req.body.name,
     format: req.body.format,
     date: req.body.date,
@@ -26,43 +26,43 @@ router.post('/', authenticateRequest, (req, res) => {
     organizer: req.body.organizer
   });
 
-  Event.addEvent(newEvent, (err, event) => {
+  Meetup.addMeetup(newMeetup, (err, meetup) => {
     if (err) {
       return res.status(500).json({
         success: false,
-        msg: 'Error adding event record',
+        msg: 'Error adding Meetup record',
         err: err,
       });
     }
     res.status(201).json({
       success: true,
-      msg: 'Successfully added event record',
-      event: event,
+      msg: 'Successfully added Meetup record',
+      meetup: meetup,
     });
   });
 });
 
-router.get('/:eventid', authenticateRequest, (req, res) => {
-  let eventId = req.params.eventid;
-  Event.getEventById(eventId, (err, event) => {
+router.get('/:meetupid', authenticateRequest, (req, res) => {
+  let meetupId = req.params.Meetupid;
+  Meetup.getMeetupById(meetupId, (err, meetup) => {
     if (err) {
       return res.status(500).json({
         success: false,
-        msg: 'Error getting event record',
+        msg: 'Error getting meetup record',
         err: err,
       });
     };
-    if (!err && !event) {
+    if (!err && !meetup) {
       return res.status(404).json({
         success: false,
-        msg: 'Event record not found',
+        msg: 'Meetup record not found',
         err: err,
       });
     }
     res.status(200).json({
       success: true,
-      msg: 'Successfully obtained event record',
-      event: event,
+      msg: 'Successfully obtained Meetup record',
+      meetup: meetup,
     });
   })
 })

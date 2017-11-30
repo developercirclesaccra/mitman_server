@@ -6,7 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const user = require('./routes/user');
-const event = require('./routes/event');
+const meetup = require('./routes/meetup');
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/user', user);
-app.use('/event', event);
+app.use('/meetup', meetup);
 
 app.get('/', (req, res) => {
   return res.status(200).send('Mitman Backend');

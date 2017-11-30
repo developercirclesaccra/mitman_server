@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const EventSchema = mongoose.Schema({
+const MeetupSchema = mongoose.Schema({
   name: { type: String },
   format: { type: String, enum: ["Tech Talk", "Workshop", "Hackathon", "Viewing Party", "Hybrid"] },
   date: { type: String },
@@ -16,12 +16,12 @@ const EventSchema = mongoose.Schema({
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
-const Event = module.exports = mongoose.model('Event', EventSchema);
+const Meetup = module.exports = mongoose.model('Meetup', MeetupSchema);
 
-module.exports.addEvent = (newEvent, callback) => {
-  newEvent.save(callback);
+module.exports.addMeetup = (newMeetup, callback) => {
+  newMeetup.save(callback);
 };
 
-module.exports.getEventById = (eventId, callback) => {
-  Event.findOne({ _id: eventId }).populate('user').exec(callback);
+module.exports.getMeetupById = (MeetupId, callback) => {
+  Meetup.findOne({ _id: MeetupId }).populate('user').exec(callback);
 }
