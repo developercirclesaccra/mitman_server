@@ -13,7 +13,7 @@ const MeetupSchema = mongoose.Schema({
   description: { type: String },
   agenda: { type: String },
   is_swag: { type: Boolean },
-  organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  organizer: { type: String },
 });
 
 const Meetup = module.exports = mongoose.model('Meetup', MeetupSchema);
