@@ -12,6 +12,7 @@ router.get('/', authenticateRequest, (req, res) => {
 });
 
 router.post('/', authenticateRequest, (req, res) => {
+  console.log('*meetup data body: ', req.body, typeof req.body);
   let newMeetup = new Meetup({
     name: req.body.name,
     format: req.body.format,
@@ -43,7 +44,7 @@ router.post('/', authenticateRequest, (req, res) => {
 });
 
 router.get('/:meetupid', authenticateRequest, (req, res) => {
-  let meetupId = req.params.Meetupid;
+  let meetupId = req.params.meetupid;
   Meetup.getMeetupById(meetupId, (err, meetup) => {
     if (err) {
       return res.status(500).json({

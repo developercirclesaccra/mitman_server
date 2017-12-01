@@ -22,6 +22,6 @@ module.exports.addMeetup = (newMeetup, callback) => {
   newMeetup.save(callback);
 };
 
-module.exports.getMeetupById = (MeetupId, callback) => {
-  Meetup.findOne({ _id: MeetupId }).populate('user').exec(callback);
+module.exports.getMeetupById = (meetupId, callback) => {
+  Meetup.findById(meetupId, callback);
 }

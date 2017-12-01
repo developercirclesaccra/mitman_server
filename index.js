@@ -26,7 +26,7 @@ mongoose.connection.on('error', (error) => {
   console.log('Mitman remote DB error: ', error);
 })
 
-app.set('port', (process.env.PORT || 3600));
+app.set('port', (process.env.PORT || 4600));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
