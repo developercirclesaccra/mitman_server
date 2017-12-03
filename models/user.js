@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
   first_name: { type: String },
   last_name: { type: String },
-  fb_id: { type: String },
+  fb_id: { type: String, unique: true },
   email: { type: String },
   phone_number: { type: String },
 });
