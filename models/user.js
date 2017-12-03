@@ -8,6 +8,7 @@ const UserSchema = mongoose.Schema({
   fb_id: { type: String, unique: true },
   email: { type: String },
   phone_number: { type: String },
+  meetups: [{type: String}]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -19,3 +20,12 @@ module.exports.addUser = (newUser, callback) => {
 module.exports.getUserByFbId = (fbId, callback) => {
   User.findOne({ fb_id: fbId }, callback);
 };
+
+module.exports.addMeetup = (fbId, meetupId, callback) => {
+  User.findOneAndUpdate(
+    { fb_id: fbId },
+    { $push: { meetups: meetupId } },
+    { new: true, upsert: true},
+    callback
+  )
+}
