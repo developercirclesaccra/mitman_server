@@ -12,13 +12,12 @@ router.get('/', authenticateRequest, (req, res) => {
 });
 
 router.post('/', authenticateRequest, (req, res) => {
-  let newUser = new User({
+  let newUser = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     fb_id: req.body.fb_id,
-    email: req.body.email,
-    phone_number: req.body.phone_number,
-  });
+    meetup: req.body.meetup
+  };
 
   User.addUser(newUser, (err, user) => {
     if (err) {
