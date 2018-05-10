@@ -12,14 +12,20 @@ router.get('/', authenticateRequest, (req, res) => {
 });
 
 router.post('/', authenticateRequest, (req, res) => {
-  let newUser = {
+  if (!req.body.first_name && !req.body.last_name && !req.body.fb_id) {
+    return req.status(400).json({
+      success: false,
+      msg: 'User record can not be empty',
+    });
+  }
+  const user = new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     fb_id: req.body.fb_id,
     meetup: req.body.meetup
-  };
+  });
 
-  User.addUser(newUser, (err, user) => {
+  User.create(user, authenticateRequest, (err, user) => {
     if (err) {
       return res.status(500).json({
         success: false,
@@ -35,9 +41,9 @@ router.post('/', authenticateRequest, (req, res) => {
   });
 });
 
-router.get('/:fbid', authenticateRequest, (req, res) => {
-  let fbId = req.params.fbid;
-  User.getUserByFbId(fbId, (err, user) => {
+router.get('/:userid', authenticateRequest, (req, res) => {
+  let user_id = req.params.userid;
+  User.get(user_id, (err, user) => {
     if (err) {
       return res.status(500).json({
         success: false,
@@ -60,14 +66,18 @@ router.get('/:fbid', authenticateRequest, (req, res) => {
   });
 });
 
-router.post('/addmeetup', authenticateRequest, (req, res) => {
-  let fbId = req.body.fb_id;
-  let meetupId = req.body.meetup_id;
-  User.addMeetup(fbId, meetupId, (err, user) => {
+router.put('/:userid', authenticateRequest, (req, res) => {
+  if (!req.body.first_name && !req.body.last_name && !req.body.fb_id) {
+    return req.status(400).json({
+      success: false,
+      msg: 'User record can not be empty',
+    });
+  }
+  User.updateuser(req.body, (err, user) => {
     if (err) {
       return res.status(500).json({
         success: false,
-        msg: 'Error adding meetup data',
+        msg: 'Error updating user data',
         err: err,
       });
     };
@@ -80,8 +90,25 @@ router.post('/addmeetup', authenticateRequest, (req, res) => {
     }
     res.status(200).json({
       success: true,
-      msg: 'Successfully added meetup data',
+      msg: 'Successfully updated user data',
       user: user,
+    });
+  })
+});
+
+router.delete('/:userid', authenticateRequest, (req, res) => {
+  User.deleteuser(req.params.userid, (err) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        msg: 'Error deleting user data',
+        err: err,
+      });
+    };
+    
+    res.status(200).json({
+      success: true,
+      msg: 'Successfully deleted user data'
     });
   })
 })
